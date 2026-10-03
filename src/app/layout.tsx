@@ -1,7 +1,7 @@
 // app/layout.tsx
 import type { ReactNode } from "react";
 import { Hind_Siliguri, Anek_Bangla } from "next/font/google";
-import Header from "../app/components/Header";
+import Header from "./components/Navbar/Header";
 import "./globals.css";
 
 const body = Hind_Siliguri({

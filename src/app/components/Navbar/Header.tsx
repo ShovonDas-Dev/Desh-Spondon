@@ -1,6 +1,7 @@
 import Link from "next/link";
 import BreakingTicker from "./BreakingTicker";
-
+import Navlink from "../Navbar/Navlink"
+import { ApiService } from "../../lib/ApiService";
 type Category = {
   slug: string;
   title: string;
@@ -9,18 +10,7 @@ type Category = {
   scrapable: boolean;
 };
 
-const API = "https://news-api-v2.vercel.app/api/categories";
 
-async function getCategories(): Promise<Category[]> {
-  try {
-    const res = await fetch(API, { next: { revalidate: 3600 } });
-    if (!res.ok) return [];
-    const json = await res.json();
-    return json?.data ?? [];
-  } catch {
-    return [];
-  }
-}
 
 function bengaliDate() {
   return new Intl.DateTimeFormat("bn-BD", {
@@ -53,13 +43,13 @@ async function getDhakaTemp(): Promise<number | null> {
   }
 }
 
-function hrefFor(c: Category) {
-  return c.scrapable ? `/category/${c.slug}` : "/";
-}
+
 
 export default async function Header() {
   const temp = await getDhakaTemp();
-  const categories = await getCategories();
+  const api= await ApiService("https://news-api-v2.vercel.app/api/categories")
+  const categories : Category = api.data
+ 
 
   return (
     <header className="border-t-[3px] border-t-[#222] bg-[#F5F1E8] text-[#1a1a1a]">
@@ -85,7 +75,7 @@ export default async function Header() {
       </div>
 
       {/* Masthead */}
-      <div className="mx-auto flex max-w-[1700px] flex-col items-center justify-between gap-4 px-4 py-6 md:grid md:grid-cols-[1fr_auto_1fr] md:px-12 md:py-8 lg:px-24">
+      <div className="mx-auto flex max-w-[1700px] flex-col items-center justify-between gap-4 px-4 py-6 md:grid md:grid-cols-[1fr_auto_1fr] md:px-12 md:py-5 lg:px-24">
         {/* Placeholder for Grid alignment on Desktop */}
         <div className="hidden md:block" />
 
@@ -98,11 +88,11 @@ export default async function Header() {
             >
               দে
             </span>
-            <span className="font-logo text-3xl font-black leading-none sm:text-3xl md:text-5xl">
+            <span className="font-logo text-xl font-black leading-none sm:text-2xl md:text-4xl">
               দেশস্পন্দন
             </span>
           </div>
-          <span className="mt-1.5 text-[11px] tracking-wide text-[#555] sm:mt-2 sm:text-xs md:text-sm">
+          <span className="mt-1 text-[11px] tracking-wide text-[#555] sm:mt-2 sm:text-xs md:text-sm">
             সত্যের সঙ্গে, দেশের স্পন্দনে
           </span>
         </Link>
@@ -132,20 +122,7 @@ export default async function Header() {
       </div>
 
       {/* Category nav */}
-      <nav aria-label="Categories" className="border-y border-[#222]">
-        <ul className="mx-auto flex max-w-[1700px] items-center gap-6 overflow-x-auto whitespace-nowrap px-4 py-3 text-sm sm:gap-8 sm:py-4 md:justify-center md:gap-12 md:px-12 md:text-[14px] lg:gap-14 lg:px-24 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
-          {categories.map((c) => (
-            <li key={c.slug}>
-              <Link
-                href={hrefFor(c)}
-                className="font-bold transition-colors hover:text-[#7B1C32] focus-visible:text-[#7B1C32] focus-visible:outline-none"
-              >
-                {c.title}
-              </Link>
-            </li>
-          ))}
-        </ul>
-      </nav>
+      <Navlink categories={categories}/>
       <BreakingTicker/>
     </header>
   );

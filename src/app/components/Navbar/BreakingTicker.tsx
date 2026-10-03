@@ -1,22 +1,8 @@
 // components/BreakingTicker.tsx
-// Server Component – নিজেই API call করে, আলাদা CSS file লাগে না।
 import Link from "next/link";
+import { ApiService } from "../../lib/ApiService";
 
 type News = { id: string; title: string; type: string };
-
-const API = "https://news-api-v2.vercel.app/api/news";
-
-async function getHeadlines(limit: number) {
-  try {
-    const res = await fetch(API, { next: { revalidate: 300 } }); // ৫ মিনিট পরপর refresh
-    if (!res.ok) return [];
-    const json = await res.json();
-    const items: News[] = json?.data ?? [];
-    return items.filter((n) => n.type !== "link").slice(0, limit);
-  } catch {
-    return [];
-  }
-}
 
 export default async function BreakingTicker({
   limit = 8,
@@ -25,9 +11,15 @@ export default async function BreakingTicker({
   limit?: number;
   secondsPerItem?: number;
 }) {
-  const headlines = await getHeadlines(limit);
-  if (!headlines.length) return null;
 
+  const res = await ApiService("https://news-api-v2.vercel.app/api/news", limit, 300);
+
+  const rawItems: News[] = Array.isArray(res) ? res : res?.data ?? [];
+
+  const headlines = rawItems.filter((n) => n.type !== "link").slice(0, limit);
+
+  if (!headlines.length) return null;
+  
   const loop = [...headlines, ...headlines]; // seamless loop এর জন্য ২ বার
   const duration = Math.max(headlines.length * secondsPerItem, 30);
 
