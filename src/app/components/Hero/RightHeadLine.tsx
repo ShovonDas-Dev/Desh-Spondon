@@ -26,7 +26,7 @@ const RightHeadLine = ({rightArticles} : {rightArticles: RightHeadlineProps[]}) 
 
             {/* Title */}
             <div>
-                <Link href={article.link} className="pt-1 text-[16px] font-bold leading-7 text-gray-900 hover:text-red-500">
+                <Link key={article.id} href={`/news/${article.id}`} className="pt-1 text-[16px] font-bold leading-7 text-gray-900 hover:text-red-500">
               {article.title}
             </Link>
             </div>

@@ -17,6 +17,9 @@ const MainHeadline = ({ middleArticles }: { middleArticles: MainHeadlineProps[] 
     <div className="mx-auto max-w-5xl border border-gray-300  p-3">
 
   {/* Main Featured News */}
+  <Link 
+  key={middleArticles[0].id} 
+  href={`/news/${middleArticles[0].id}`}>
   <div>
     <img
       src={middleArticles[0].imageUrl}
@@ -25,15 +28,16 @@ const MainHeadline = ({ middleArticles }: { middleArticles: MainHeadlineProps[] 
     />
 
     <div className='my-4'>
-      <Link href={middleArticles[0].link} className=" text-xl font-bold hover:text-red-500">
+      <h1  className=" text-xl font-bold hover:text-red-500">
       {middleArticles[0].title}
-    </Link>
+    </h1>
     </div>
 
     <p className="text-sm text-gray-500">
       {middleArticles[0].description}
     </p>
   </div>
+  </Link>
 
 
   {/* 2 Small News */}
@@ -49,7 +53,7 @@ const MainHeadline = ({ middleArticles }: { middleArticles: MainHeadlineProps[] 
         />
 
         <div className='mt-1'>
-          <Link href={article.link} className="mt-1 text-sm font-bold hover:text-red-500">
+          <Link key={article.id} href={`/news/${article.id}`} className="mt-1 text-sm font-bold hover:text-red-500">
           {article.title}
         </Link>
         </div>
@@ -70,7 +74,7 @@ const MainHeadline = ({ middleArticles }: { middleArticles: MainHeadlineProps[] 
       >
 
        <div>
-         <Link href={article.link} className="text-base font-bold hover:text-red-500">
+         <Link key={article.id} href={`/news/${article.id}`} className="text-base font-bold hover:text-red-500">
           {article.title}
         </Link>
        </div>

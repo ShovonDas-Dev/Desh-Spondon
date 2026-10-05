@@ -10,7 +10,7 @@ const Navlink = ({categories}) => {
           {categories.map((c) => (
             <li key={c.slug}>
               <Link
-                href={c.slug}
+                href={`/category/${c.slug}`}
                 className="font-bold transition-colors hover:text-[#7B1C32] focus-visible:text-[#7B1C32] focus-visible:outline-none"
               >
                 {c.title}
