@@ -1,6 +1,7 @@
 import LeftHeadLine from "./components/Hero/LeftHeadLine";
 import MainHeadline from "./components/Hero/MainHeadline";
 import RightHeadLine from "./components/Hero/RightHeadLine";
+import BreakingTicker from "./components/Navbar/BreakingTicker";
 import { ApiService } from "./lib/ApiService";
 
 
@@ -14,6 +15,7 @@ export default async function Home() {
   
   return (
       <div>
+        <BreakingTicker/>
         {/* home-hero-section  */}
         <section className="max-w-[1250px]  mx-auto my-5">
           <div className='grid grid-cols-12 gap-6 '>

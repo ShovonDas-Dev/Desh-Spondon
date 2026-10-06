@@ -2,6 +2,7 @@ import Link from "next/link";
 import BreakingTicker from "./BreakingTicker";
 import Navlink from "../Navbar/Navlink"
 import { ApiService } from "../../lib/ApiService";
+import AuthButton from "./AuthButton";
 type Category = {
   slug: string;
   title: string;
@@ -98,32 +99,12 @@ export default async function Header() {
         </Link>
 
         {/* Auth Actions (Login / Sign Up) */}
-        <div className="flex items-center justify-center gap-2 sm:gap-3 md:justify-end">
-          {/* Log In Button */}
-          <Link
-            href="/login"
-            className="flex h-10 items-center gap-2 border border-[#222] bg-white px-4 text-xs font-semibold text-[#1a1a1a] transition-colors hover:bg-[#f0ece1] sm:h-[45px] sm:px-6 sm:text-sm"
-          >
-            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-              <path d="M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2" />
-              <circle cx="12" cy="7" r="4" />
-            </svg>
-            লগইন
-          </Link>
-
-          {/* Sign Up Button */}
-          <Link
-            href="/signup"
-            className="flex h-10 items-center bg-[#7B1C32] px-4 text-xs font-semibold text-white transition-colors hover:bg-[#5f1527] sm:h-[45px] sm:px-6 sm:text-sm"
-          >
-            সাইন ইন / রেজিস্ট্রেশন
-          </Link>
-        </div>
+        <AuthButton/>
       </div>
 
       {/* Category nav */}
       <Navlink categories={categories}/>
-      <BreakingTicker/>
+      
     </header>
   );
 }

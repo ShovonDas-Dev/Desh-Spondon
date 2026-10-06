@@ -44,7 +44,7 @@ interface NewsResponse {
 
 const NewsDetails = async ({ params }: NewsDetailsProps) => {
   const { newsid } = await params;
-
+ 
   const res = await fetch(
     `https://news-api-v2.vercel.app/api/article/${newsid}`,
     {
@@ -53,12 +53,33 @@ const NewsDetails = async ({ params }: NewsDetailsProps) => {
   );
 
   if (!res.ok) {
-    throw new Error("Failed to fetch news");
-  }
+  return (
+    <div className="min-h-[60vh] flex items-center justify-center">
+      <div className="text-center">
+        <h2 className="text-2xl font-bold mb-2">
+          News is currently unavailable
+        </h2>
+
+        <p className="text-gray-500">
+          Sorry, we couldn't load this news right now.
+          Please try again later.
+        </p>
+
+        <a
+          href="/"
+          className="inline-block mt-5 px-5 py-2 bg-black text-white rounded-md"
+        >
+          Back to Home
+        </a>
+      </div>
+    </div>
+  );
+}
 
   const result: NewsResponse = await res.json();
 
   const news = result.data;
+ 
 
   const date = new Date(news.firstPublished).toLocaleDateString("bn-BD", {
     day: "numeric",

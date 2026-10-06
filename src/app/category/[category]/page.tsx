@@ -33,7 +33,7 @@ export default async function SportsPage( {params}) {
   const sportsNews = data.data
 
   return (
-    <main className="min-h-screen bg-gray-50 py-10">
+    <main className="min-h-screen  py-10">
       <div className="mx-auto max-w-7xl px-4">
         
         {/* Page Header */}
